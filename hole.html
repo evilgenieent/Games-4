@@ -10,39 +10,98 @@
     z-index: 0;
     overflow: hidden;
     cursor: none;
+  }
+
+  .content {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    overflow: hidden;
     background-image: url("charlie.jpg");
     background-size: cover;
   }
 
-  h1 {
+  img {
+    display: none;
     position: absolute;
-    z-index: -1;
-    color: red;
-    left: 50%;
-    top: 270px;
+    width: 265px;
+    z-index: 10;
   }
 
   .overlay {
     top: 0;
     left: 0;
-    z-index: 100;
-    background-color: rgba(0,0,0, 0.9);
+    z-index: 5;
     position: absolute;
     width: 1000%;
     height: 1000%;
-    -webkit-mask-image: radial-gradient(100px at 50% 50% , transparent 95%, black 100%);
+  }
+
+  .on {
+    background-color: rgba(0,0,0, 0.9);
+    -webkit-mask-image: radial-gradient(80px at 50% 50% , transparent 95%, black 100%);
+  }
+
+  .off {
+    background-color: black;
+    opacity: 0.9;
+  }
+
+  .flash-light {
+    background-color: black;
+    opacity: 0.8;
+  }
+
+  .flash-dark {
+    background-color: black;
+    opacity: 1;
   }
 </style>
 <body>
-  <div class="overlay"></div>
+  <div class="content">
+    <div class="overlay on"></div>
+    <img alt="zoom" src="loupe.png"/>
+  </div>
 </body>
 </html>
 <script type="text/javascript">
+  const content = document.querySelector('.content')
   const overlay = document.querySelector('.overlay')
-  document.addEventListener("mousemove", (evt) => {
-    console.log(evt)
-    overlay.style.left = (evt.clientX - 6830) + "px";
-    overlay.style.top = (evt.clientY - 3280) + "px";
-    // overlay
+  const img = document.querySelector('body img')
+
+  const width = window.innerWidth
+  const height = window.innerHeight
+  content.style.width = width + "px"
+  content.style.height = height + "px"
+
+  document.addEventListener("mousemove", evt => {
+    overlay.style.left = (evt.clientX - (width * 5)) + "px"
+    overlay.style.top = (evt.clientY - (height * 5)) + "px"
+    if (overlay.classList.contains('on')) {
+      img.style.display = 'block'
+    }
+    img.style.left = (evt.clientX - 100) + "px"
+    img.style.top = (evt.clientY - 90) + "px"    
+  })
+
+  document.addEventListener("click", () => {
+    if (overlay.classList.contains('on')) {
+      overlay.classList.add('flash-dark')
+      setTimeout(() => {
+        overlay.classList.remove('flash-dark')
+        img.style.display = 'none'
+        overlay.classList.add('off')
+        overlay.classList.remove('on')
+      }, 50)
+    } else {
+      overlay.classList.add('flash-light')
+      setTimeout(() => {
+        overlay.classList.remove('flash-light')
+        img.style.display = 'block'
+        overlay.classList.add('on')
+        overlay.classList.remove('off')
+      }, 50)
+    }
   })
 </script>
