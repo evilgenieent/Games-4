@@ -1,4 +1,6 @@
-# Where-is-charlie
-Find charlie and win :)
+# Games
+
+## Games List
+- Find charlie
 
 Project develop by love <3
