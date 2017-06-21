@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+</head>
+<style type="text/css">
+  html, body {
+    padding: 0;
+    margin: 0;
+    z-index: 0;
+    overflow: hidden;
+    cursor: none;
+    background-image: url("charlie.jpg");
+    background-size: cover;
+  }
+
+  h1 {
+    position: absolute;
+    z-index: -1;
+    color: red;
+    left: 50%;
+    top: 270px;
+  }
+
+  .overlay {
+    top: 0;
+    left: 0;
+    z-index: 100;
+    background-color: rgba(0,0,0, 0.9);
+    position: absolute;
+    width: 1000%;
+    height: 1000%;
+    -webkit-mask-image: radial-gradient(100px at 50% 50% , transparent 95%, black 100%);
+  }
+</style>
+<body>
+  <div class="overlay"></div>
+</body>
+</html>
+<script type="text/javascript">
+  const overlay = document.querySelector('.overlay')
+  document.addEventListener("mousemove", (evt) => {
+    console.log(evt)
+    overlay.style.left = (evt.clientX - 6830) + "px";
+    overlay.style.top = (evt.clientY - 3280) + "px";
+    // overlay
+  })
+</script>
