@@ -1,6 +1,6 @@
 # Games
 
 ## Games List
-- Find charlie
+- Where is Waldo?
 
 Project develop by love <3
