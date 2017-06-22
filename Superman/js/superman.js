@@ -1,12 +1,11 @@
 let myGamePiece
 let myObstacles = []
-let myScore
+// let myScore
 
 function startGame () {
-  myGamePiece = new component(40, 15, "./img/superman.png", 10, 120, "image")
+  myGamePiece = new component(30, 10, "./img/superman.png", 10, 120, "image")
   myGamePiece.gravity = 0.05
-  myRect = new component(150, 40, "black", 275, 15, "rect")
-  myScore = new component("20px", "Consolas", "white", 280, 40, "text")
+  // myScore = new component("15px", "Lucida Sans Unicode", "white", 350, 40, "text")
   myGameArea.start()
 }
 
@@ -29,7 +28,6 @@ function component (width, height, color, x, y, type) {
   if (type == "image") {
     this.image = new Image();
     this.image.src = color;
-    this.image.style.borderRadius = '50px'
   }
   this.type = type
   this.score = 0
@@ -49,7 +47,6 @@ function component (width, height, color, x, y, type) {
       ctx.fillText(this.text, this.x, this.y)
     } else if (this.type == "image") {
       ctx.drawImage(this.image, this.x, this.y, this.width, this.height)
-      ctx.strokeRect(0, 0, ctx.canvas.width, ctx.canvas.height)
     } else {
       ctx.fillStyle = color
       ctx.fillRect(this.x, this.y, this.width, this.height)
@@ -122,7 +119,7 @@ function updateGameArea (force) {
     minHeight = 40
     maxHeight = 200
     height = Math.floor(Math.random() * (maxHeight - minHeight + 1) + minHeight)
-    minGap = 25
+    minGap = 40
     maxGap = 200
     gap = Math.floor(Math.random() * (maxGap - minGap + 1) + minGap)
     myObstacles.push(new component(40, height, "./img/building-reverse.png", x, 0, "image"))
@@ -132,9 +129,9 @@ function updateGameArea (force) {
     myObstacles[i].x += -1
     myObstacles[i].update()
   }
-  myRect.update()
-  myScore.text = "SCORE: " + myGameArea.frameNo
-  myScore.update()
+  // myScore.text = "SCORE: " + myGameArea.frameNo
+  // myScore.update()
+  currentScore.innerHTML = 'SCORE : ' + myGameArea.frameNo
   myGamePiece.newPos()
   myGamePiece.update()
 }
@@ -148,6 +145,9 @@ function accelerate (nb) {
   myGamePiece.gravity = nb
 }
 
+const currentScore = document.querySelector('.current-score')
+currentScore.innerHTML = 'SCORE : 0'
+
 const username = document.querySelector('.username')
 const bestUser = document.querySelector('.user')
 const bestScore = document.querySelector('.score')
@@ -158,6 +158,7 @@ start.addEventListener('click', () => {
   if (username.value === '') return
   content.style.display = 'none'
   launcher.style.display = 'none'
+  currentScore.style.display = 'block'
   startGame()
 })
 
