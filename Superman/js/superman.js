@@ -1,11 +1,11 @@
 let myGamePiece
 let myObstacles = []
-// let myScore
+let gameStarted = false
 
 function startGame () {
+  gameStarted = true
   myGamePiece = new component(30, 10, "./img/superman.png", 10, 120, "image")
   myGamePiece.gravity = 0.05
-  // myScore = new component("15px", "Lucida Sans Unicode", "white", 350, 40, "text")
   myGameArea.start()
 }
 
@@ -92,6 +92,7 @@ function updateGameArea (force) {
   for (i = 0; i < myObstacles.length; i += 1) {
     if (myGamePiece.crashWith(myObstacles[i]) || force) {
       clearInterval(myGameArea.interval)
+      gameStarted = false
       crash = false
       myObstacles = []
 
@@ -129,8 +130,6 @@ function updateGameArea (force) {
     myObstacles[i].x += -1
     myObstacles[i].update()
   }
-  // myScore.text = "SCORE: " + myGameArea.frameNo
-  // myScore.update()
   currentScore.innerHTML = 'SCORE : ' + myGameArea.frameNo
   myGamePiece.newPos()
   myGamePiece.update()
@@ -171,10 +170,22 @@ restart.addEventListener('click', () => {
 })
 
 document.addEventListener('keydown', evt => {
+  if (!gameStarted) return
   switch (evt.keyCode) {
     case 38:
       accelerate(-0.2)
       setTimeout(() => { accelerate(0.05) }, 100)
       break
+    case 32:
+      accelerate(-0.2)
+      setTimeout(() => { accelerate(0.05) }, 100)
+      break
+  }
+})
+
+document.addEventListener('click', evt => {
+  if (gameStarted) {
+    accelerate(-0.2)
+    setTimeout(() => { accelerate(0.05) }, 100)
   }
 })
