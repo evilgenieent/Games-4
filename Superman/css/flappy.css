@@ -1,0 +1,61 @@
+@font-face {
+  font-family: Superman;
+  src: url("../fonts/superman.ttf");
+}
+
+html, body {
+  font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  overflow: hidden;
+  background-image: url('../img/superman-wallpaper.jpg');
+  background-size: cover;
+}
+canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #d3d3d3;
+  background-color: #f1f1f1;
+}
+h1 {
+  font-family: Superman;
+  font-size: 80px;
+  color: white;
+}
+p, label { font-size: 20px; }
+div.content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+button {
+  display: flex;
+  width: 150px;
+  height: 50px;
+}
+div.start-game, div.restart-game {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+div.restart-game {
+  display: none;
+}
+div.restart-game p {
+  color: red;
+}
+div.pseudo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+input.username {
+  width: 30%;
+}
