@@ -64,16 +64,14 @@ function component (width, height, color, x, y, type) {
   }
   this.hitBottom = function () {
     const rockbottom = myGameArea.canvas.height - this.height
-    if (this.y > rockbottom) {
-      this.y = rockbottom
-      this.gravitySpeed = 0
-    }
+    if (this.y > (rockbottom + 15)) updateGameArea(true)
+    // this.y = rockbottom
+    // this.gravitySpeed = 0
   }
   this.hitTop = function () {
-    if (this.y < 1) {
-      this.y = 0
-      this.gravitySpeed = 1
-    }
+    if (this.y < -15) updateGameArea(true)
+    // this.y = 0
+    // this.gravitySpeed = 1
   }
   this.crashWith = function (otherobj) {
     const myleft = this.x
@@ -92,10 +90,10 @@ function component (width, height, color, x, y, type) {
   }
 }
 
-function updateGameArea () {
+function updateGameArea (force) {
   let x, height, gap, minHeight, maxHeight, minGap, maxGap
   for (i = 0; i < myObstacles.length; i += 1) {
-    if (myGamePiece.crashWith(myObstacles[i])) {
+    if (myGamePiece.crashWith(myObstacles[i]) || force) {
       clearInterval(myGameArea.interval)
       crash = false
       myObstacles = []
