@@ -5,68 +5,13 @@
 </head>
 <header>
   <link rel='stylesheet' type='text/css' href='../assets/css/bootstrap.min.css'>
-  <link rel='stylesheet' type='text/css' href='../assets/css/font-awesome.min.css'>
-  <link rel='stylesheet' type='text/css' href='../assets/css/app.css'>
+  <link rel="stylesheet" type="text/css" href="./css/waldo.css">
 </header>
-<style type='text/css'>
-  html, body {
-    padding: 0;
-    margin: 0;
-    z-index: 0;
-    overflow: hidden;
-    cursor: none;
-  }
-
-  .content {
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    overflow: hidden;
-    background-image: url("./img/map.jpg");
-  }
-
-  img.zoom {
-    display: none;
-    position: absolute;
-    width: 265px;
-    z-index: 10;
-  }
-
-  img.waldo-face {
-    height: 500px;
-  }
-
-  .overlay {
-    top: 0;
-    left: 0;
-    z-index: 5;
-    position: absolute;
-    width: 1000%;
-    height: 1000%;
-    background-color: rgba(0,0,0, 0.9);
-    -webkit-mask-image: radial-gradient(80px at 50% 50% , transparent 95%, black 100%);
-  }
-
-  #win-popup {
-    cursor: pointer;
-    margin-bottom: 5px; 
-  }
-
-  .waldo {
-    background: transparent;
-    z-index: 100;
-    position: absolute;
-    left: 55px;
-    top: 540px;
-    width: 100px;
-    height: 100px;
-  }
-</style>
 <body>
   <div class='content'>
-    <div class='overlay on'></div>
+    <div class='overlay'></div>
     <img class='zoom' alt='zoom' src='./img/loupe.png'/>
+    <img class='wallpaper' alt='wallpaper' src="./img/maps/1.jpg">
   </div>
 
   <div class='waldo' data-toggle='modal' data-target='#win-popup'></div>
@@ -74,49 +19,30 @@
     <div class='modal-dialog'>
       <div class='modal-content'>
         <div class='modal-body'>
-          <button type='button' class='close' data-dismiss='modal'>&times;</button>
-          <h3 class='text-center'>Vous avez remport&eacute; la partie !</h3>
+          <button type='button' class='close' data-dismiss='modal'>X</button>
+          <h3 class='text-center'></h3>
           <img class='waldo-face' alt='waldo' src='./img/waldo.jpg'>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="start-game form-group">
+    <p>Quel est votre nom ?</p>
+    <input class="name form-control" type="text">
+    <button class="btn btn-success btn-start">Commencer</button>
+  </div>
+
+  <div class='next-level'>
+    <button class='btn btn-success btn-next'>Niveau suivant</button>
+  </div>
+  <div class='end-game'>
+    <div class="username"></div>
+    <img src="./img/trophy.png" alt="trophe">
+    <button class='btn btn-success btn-restart'>Recommencer</button>
+  </div>
 </body>
 </html>
 <script src='../assets/js/jquery-3.2.1.min.js' type='text/javascript'></script>
 <script src='../assets/js/bootstrap.min.js' type='text/javascript'></script>
-<script type='text/javascript'>
-  let isOpen = false
-  const content = document.querySelector('.content')
-  const overlay = document.querySelector('.overlay')
-  const img = document.querySelector('body img')
-  const waldo = document.querySelector('.waldo')
-
-  const width = window.innerWidth
-  const height = window.innerHeight
-  content.style.width = width + 'px'
-  content.style.height = height + 'px'
-
-  function move (evt) {
-    overlay.style.left = (evt.clientX - (width * 5)) + 'px'
-    overlay.style.top = (evt.clientY - (height * 5)) + 'px'
-    img.style.display = 'block'
-    img.style.left = (evt.clientX - 100) + 'px'
-    img.style.top = (evt.clientY - 90) + 'px' 
-  }
-
-  document.addEventListener('mousemove', move)
-  waldo.addEventListener('click', () => {
-    document.removeEventListener('mousemove', move)
-    isOpen = true
-  })
-
-  document.addEventListener('click', () => {
-    setTimeout(() => {
-      if (!document.body.classList.contains("modal-open") && isOpen) {
-        document.addEventListener('mousemove', move)
-        isOpen = false
-      }
-    }, 500)
-  })
-</script>
+<script src='./js/waldo.js' type='text/javascript'></script>
