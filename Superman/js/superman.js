@@ -99,7 +99,8 @@ function updateGameArea (force) {
       myObstacles = []
 
       const sendScore = currentScore.innerHTML.split(':')[1].trim()
-      if (window.localStorage.getItem('score') && window.localStorage.getItem('score') < sendScore) {
+      if (window.localStorage.getItem('score') &&
+          parseInt(window.localStorage.getItem('score')) < parseInt(sendScore)) {
         window.localStorage.setItem('score', sendScore)
         window.localStorage.setItem('username', username.value)
       }
