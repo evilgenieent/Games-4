@@ -2,5 +2,7 @@
 
 ## Games List
 - Where is Waldo?
+- James bond
+- Superman
 
-Project develop by love <3
+Project developed by love <3
