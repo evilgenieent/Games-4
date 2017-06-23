@@ -17,7 +17,7 @@ const myGameArea = {
     this.context = this.canvas.getContext("2d")
     document.body.insertBefore(this.canvas, document.body.childNodes[0])
     this.frameNo = 0
-    this.interval = setInterval(updateGameArea, 20)
+    this.interval = setInterval(updateGameArea, 9)
   },
   clear : function () {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -34,10 +34,10 @@ function component (width, height, color, x, y, type) {
   this.width = width
   this.height = height
   this.speedX = 0
-  this.speedY = 0    
+  this.speedY = 0
   this.x = x
   this.y = y
-  this.gravity = 0
+  this.gravity = 1
   this.gravitySpeed = 0
   this.update = function () {
     ctx = myGameArea.context
@@ -89,19 +89,23 @@ function component (width, height, color, x, y, type) {
 
 function updateGameArea (force) {
   let x, height, gap, minHeight, maxHeight, minGap, maxGap
+  let myScore = 0
   for (i = 0; i < myObstacles.length; i += 1) {
+    if (myObstacles[i].x < 10) myScore++
     if (myGamePiece.crashWith(myObstacles[i]) || force) {
+      const final = (myScore / 2)
       clearInterval(myGameArea.interval)
       gameStarted = false
       crash = false
       myObstacles = []
 
-      if (window.localStorage.getItem('score') && window.localStorage.getItem('score') < myGameArea.frameNo) {
-        window.localStorage.setItem('score', myGameArea.frameNo)
+      localStorage.clear()
+      if (window.localStorage.getItem('score') && window.localStorage.getItem('score') < final) {
+        window.localStorage.setItem('score', final)
         window.localStorage.setItem('username', username.value)
       }
       else if (!window.localStorage.getItem('score')) {
-        window.localStorage.setItem('score', myGameArea.frameNo)
+        window.localStorage.setItem('score', final)
         window.localStorage.setItem('username', username.value)
       }
 
@@ -115,7 +119,7 @@ function updateGameArea (force) {
   }
   myGameArea.clear()
   myGameArea.frameNo += 1
-  if (myGameArea.frameNo == 1 || everyinterval(110)) {
+  if (myGameArea.frameNo == 1 || everyinterval(150)) {
     x = myGameArea.canvas.width
     minHeight = 40
     maxHeight = 200
@@ -130,7 +134,7 @@ function updateGameArea (force) {
     myObstacles[i].x += -1
     myObstacles[i].update()
   }
-  currentScore.innerHTML = 'SCORE : ' + myGameArea.frameNo
+  currentScore.innerHTML = 'SCORE : ' + (myScore / 2)
   myGamePiece.newPos()
   myGamePiece.update()
 }
@@ -173,19 +177,19 @@ document.addEventListener('keydown', evt => {
   if (!gameStarted) return
   switch (evt.keyCode) {
     case 38:
-      accelerate(-0.2)
-      setTimeout(() => { accelerate(0.05) }, 100)
+      accelerate(-0.09)
+      setTimeout(() => { accelerate(0.02) }, 70)
       break
     case 32:
-      accelerate(-0.2)
-      setTimeout(() => { accelerate(0.05) }, 100)
+      accelerate(-0.09)
+      setTimeout(() => { accelerate(0.02) }, 70)
       break
   }
 })
 
 document.addEventListener('click', evt => {
   if (gameStarted) {
-    accelerate(-0.2)
-    setTimeout(() => { accelerate(0.05) }, 100)
+    accelerate(-0.09)
+    setTimeout(() => { accelerate(0.02) }, 70)
   }
 })
