@@ -93,19 +93,18 @@ function updateGameArea (force) {
   for (i = 0; i < myObstacles.length; i += 1) {
     if (myObstacles[i].x < 10) myScore++
     if (myGamePiece.crashWith(myObstacles[i]) || force) {
-      const final = (myScore / 2)
       clearInterval(myGameArea.interval)
       gameStarted = false
       crash = false
       myObstacles = []
 
-      localStorage.clear()
-      if (window.localStorage.getItem('score') && window.localStorage.getItem('score') < final) {
-        window.localStorage.setItem('score', final)
+      const sendScore = currentScore.innerHTML.split(':')[1].trim()
+      if (window.localStorage.getItem('score') && window.localStorage.getItem('score') < sendScore) {
+        window.localStorage.setItem('score', sendScore)
         window.localStorage.setItem('username', username.value)
       }
       else if (!window.localStorage.getItem('score')) {
-        window.localStorage.setItem('score', final)
+        window.localStorage.setItem('score', sendScore)
         window.localStorage.setItem('username', username.value)
       }
 
@@ -117,6 +116,7 @@ function updateGameArea (force) {
       return
     }
   }
+  myScore = Math.floor(myScore / 2)
   myGameArea.clear()
   myGameArea.frameNo += 1
   if (myGameArea.frameNo == 1 || everyinterval(150)) {
@@ -134,7 +134,7 @@ function updateGameArea (force) {
     myObstacles[i].x += -1
     myObstacles[i].update()
   }
-  currentScore.innerHTML = 'SCORE : ' + (myScore / 2)
+  currentScore.innerHTML = 'SCORE : ' + myScore
   myGamePiece.newPos()
   myGamePiece.update()
 }
